@@ -1,0 +1,10 @@
+# H100 SXM 80GB: preserve Prefill capacity while shifting repeated work to Decode.
+sm_group_num: 5
+
+manual_divisions:
+  - [64, 64, 1]
+  - [56, 72, 12]
+  - [48, 80, 24]
+
+decode_bs_divisor: 36
+split_forward_token_budget: 4096

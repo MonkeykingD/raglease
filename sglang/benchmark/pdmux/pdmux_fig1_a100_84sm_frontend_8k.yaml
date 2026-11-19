@@ -1,0 +1,12 @@
+# A100 (108 SM): add one moderately frontend-heavy mixed partition while
+# retaining the 8K Prefill token budget used by the matched Fig. 1 workload.
+sm_group_num: 6
+
+manual_divisions:
+  - [84, 24, 1]
+  - [72, 36, 8]
+  - [60, 48, 16]
+  - [48, 60, 24]
+
+decode_bs_divisor: 36
+split_forward_token_budget: 8192

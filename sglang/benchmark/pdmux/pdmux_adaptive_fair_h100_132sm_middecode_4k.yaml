@@ -1,0 +1,10 @@
+# H100 SXM 80GB: a bounded Decode-heavy alternative to the failed 16-SM frontend.
+sm_group_num: 5
+
+manual_divisions:
+  - [56, 72, 1]
+  - [48, 80, 12]
+  - [40, 88, 24]
+
+decode_bs_divisor: 36
+split_forward_token_budget: 4096

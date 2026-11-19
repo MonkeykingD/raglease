@@ -1,0 +1,12 @@
+# A100 (108 SM): keep short Prefill work in a small frontend partition while
+# reserving most execution capacity for the shared ANN/Decode pool.
+sm_group_num: 6
+
+manual_divisions:
+  - [36, 72, 1]
+  - [30, 78, 8]
+  - [24, 84, 16]
+  - [12, 96, 24]
+
+decode_bs_divisor: 36
+split_forward_token_budget: 2048

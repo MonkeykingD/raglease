@@ -1,8 +1,8 @@
 # RAGLease local source release
 
-This directory packages the RAGLease SGLang changes without experiments, models,
-indexes, logs, checkpoints, credentials, or the unrelated modified files in the
-nested SGLang worktree.
+Browse the RAGLease changes in [sglang/](../sglang/). The 75 source, config,
+and test files match the archive byte for byte. The source tree also includes
+the SGLang and SGL Kernel license files and third-party notices from the base.
 
 - Base SGLang commit: `a29ea71014f00da6edd346f1a3c8a6d39f179be6` from the nested
   `sglang/` checkout.
@@ -11,18 +11,18 @@ nested SGLang worktree.
 - `sglang-raglease-files.txt`: explicit path list and tracked/new distinction.
 - `sglang-raglease-sha256.txt`: per-file integrity checksums.
 
-To reconstruct the source in a separate checkout of that exact SGLang commit:
+Verify the expanded files from the root of this repository:
 
 ```bash
-mkdir -p /path/to/clean-sglang
-# Populate /path/to/clean-sglang at the base commit first.
-tar -xzf release/sglang-raglease-overlay.tar.gz -C /path/to/clean-sglang
-cd /path/to/clean-sglang
-sha256sum -c /path/to/release/sglang-raglease-sha256.txt
+(cd sglang && sha256sum --strict -c ../release/sglang-raglease-sha256.txt)
 ```
 
-The overlay has been extracted over a clean archive of the base commit, and all
-75 checksums passed. All 52 packaged Python files passed syntax compilation.
-This verifies source integrity, not GPU behavior or reproduction of formal
-experiment results. See `docs/RAGLEASE_DESIGN.md` for architecture and the
-versioned `docs/experiments/` protocols for experiment-specific settings.
+To reconstruct a full source tree, prepare a separate SGLang checkout at the
+base commit above, then apply the archive from this repository's root:
+
+```bash
+tar -xzf release/sglang-raglease-overlay.tar.gz -C /path/to/clean-sglang
+```
+
+The published checks cover file integrity and Python syntax. The
+[design overview](../docs/RAGLEASE_DESIGN.md) links to the runtime entry points.

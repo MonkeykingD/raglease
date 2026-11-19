@@ -1,0 +1,12 @@
+# A100 (108 SM): diagnostic profile for a short, near-exclusive Prefill lease.
+sm_group_num: 6
+
+manual_divisions:
+  - [96, 12, 1]
+  - [60, 48, 8]
+  - [54, 54, 16]
+  - [48, 60, 24]
+
+decode_bs_divisor: 36
+split_forward_token_budget: 8192
+

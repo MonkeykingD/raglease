@@ -1,0 +1,15 @@
+# H100 SXM 80GB: retain progressively more Decode+ANN capacity as the
+# recurrent batch grows. Manual Green Context divisions use 128 schedulable
+# SMs; the two endpoint streams still represent full-GPU ownership.
+sm_group_num: 8
+
+manual_divisions:
+  - [72, 56, 1]
+  - [56, 72, 12]
+  - [48, 80, 24]
+  - [40, 88, 36]
+  - [32, 96, 48]
+  - [24, 104, 64]
+
+decode_bs_divisor: 36
+split_forward_token_budget: 8192

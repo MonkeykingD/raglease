@@ -1,2 +1,5 @@
 *.sh text eol=lf
 *.yhbatch text eol=lf
+
+# Retain published SGLang file bytes for checksum verification.
+sglang/** -text

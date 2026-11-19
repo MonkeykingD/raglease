@@ -31,19 +31,18 @@ HTTP /rag_generate → 请求与 ANN→Prefill 依赖 → 调度器
 
 | 路径 | 职责 |
 | --- | --- |
-| `sglang/python/sglang/srt/multiplex/` | 阶段调度、ANN 执行、热索引、预测器与租约模型 |
-| `sglang/python/sglang/srt/mem_cache/shared_hbm.py` | 共享 HBM 规划、所有权与转换 |
-| `sglang/sgl-kernel/csrc/shared_hbm/` | 共享 HBM 的底层 CUDA 实现 |
-| `sglang/python/sglang/srt/managers/`、`server_args.py`、`entrypoints/http_server.py` | 请求生命周期与服务入口集成 |
-| `sglang/benchmark/pdmux/` | RAG 负载、画像和比较工具 |
-| `cluster/paratera/` | 集群提交、持久 GPU allocation 与运行包装器；包含大量历史配置，应选定具体协议后使用 |
-| `docs/experiments/` | 版本化实验协议与判定边界 |
+| [multiplex/](../sglang/python/sglang/srt/multiplex/) | 阶段调度、ANN 执行、热索引、预测器与租约模型 |
+| [shared_hbm.py](../sglang/python/sglang/srt/mem_cache/shared_hbm.py) | 共享 HBM 规划、所有权与转换 |
+| [CUDA shared_hbm/](../sglang/sgl-kernel/csrc/shared_hbm/) | 共享 HBM 的底层 CUDA 实现 |
+| [managers/](../sglang/python/sglang/srt/managers/)、[server_args.py](../sglang/python/sglang/srt/server_args.py)、[http_server.py](../sglang/python/sglang/srt/entrypoints/http_server.py) | 请求生命周期与服务入口集成 |
+| [benchmark/pdmux/](../sglang/benchmark/pdmux/) | RAG 负载、画像和比较工具 |
+| [cluster/paratera/](../cluster/paratera/) | 集群提交、持久 GPU allocation 与运行包装器 |
 
 ## 部署与复现顺序
 
 1. 准备匹配的 SGLang/SGL Kernel 环境、模型、预处理索引与预编码查询；模型和数据不在源码发布范围内。
 2. 固定硬件、数据集、检索参数、SLO 与负载，生成并核验画像及部署配置。
 3. 通过 `cluster/paratera/submit_persistent_allocation.sh` 申请相应平台的持久单卡 allocation，在 allocation 内用 `run_in_persistent_allocation.sh` 串行运行。实际执行前检查作业状态和明确的 job ID。
-4. 先做服务烟测和指标核对，再按 `docs/experiments/` 中选定的封存协议进行负载实验；保留原始结果与 manifest，不用开发试跑冒充正式重复。
+4. 先做服务烟测和指标核对，再按选定的实验协议进行负载实验；保留原始结果与 manifest，不用开发试跑冒充正式重复。
 
-更细的机制和代码定位见 [架构概览](raglease_architecture_overview.md)，端到端比较入口见 `sglang/benchmark/pdmux/README_rag_comparison.md`。本仓库的 `sglang/` 是独立 Git 工作区，发布时应记录其精确提交，而不能只把目录名当作可复现的代码版本。
+更细的机制和代码定位见 [架构概览](raglease_architecture_overview.md)，端到端比较入口见 [RAG 比较工具](../sglang/benchmark/pdmux/README_rag_comparison.md)。`sglang/` 保留改动文件在 SGLang 中的原始路径。完整环境的基准提交与构建前的源码复原步骤见 [源码发布说明](../release/README.md)。
